@@ -1,36 +1,111 @@
-#  Building a React Project with Google Bard and the PalM2 API 
-This is the repository for the LinkedIn Learning course ` Building a React Project with Google Bard and the PalM2 API - 09/01/23 - `. The full course is available from [LinkedIn Learning]
+# MyPrompter
 
-![course-name-alt-text][lil-thumbnail-url] 
+MyPrompter is a small AI prompt-and-response web app. The React frontend sends prompts to an Express server, which requests a response from Google Gemini and returns it for display.
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+## Project layout
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+```text
+.
+├── palm-client/   React 19 + Vite frontend
+└── palm-server/   Express API server + Google Gemini SDK
+```
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+## Requirements
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+- Node.js 20 or newer
+- npm
+- A Google Gemini API key
+- Network access from the server to Google's Gemini API
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+## Setup
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+Install dependencies in each project folder:
 
+```bash
+cd palm-server
+npm install
+cd ../palm-client
+npm install
+```
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+Create `palm-server/.env` and add your Gemini API key:
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+```dotenv
+GEMINI_API_KEY=your_gemini_api_key
+```
 
+Keep this key on the server. Do not put it in the frontend or commit the `.env` file.
+
+## Run locally
+
+Open two terminals from the repository root.
+
+Terminal 1 — start the API server:
+
+```bash
+cd palm-server
+npm run dev
+```
+
+The server listens on port `3333` by default. Set `PORT` in `palm-server/.env` to use a different port.
+
+Terminal 2 — start the Vite frontend:
+
+```bash
+cd palm-client
+npm run dev
+```
+
+Open the local URL printed by Vite (usually `http://localhost:5173`). Vite proxies `/api` requests to `http://localhost:3333` during development.
+
+## Usage
+
+Enter a prompt in the composer and press **Enter** or select **Send**. Use **Shift + Enter** to add a line break. Responses are rendered as Markdown.
+
+## API
+
+`POST /api` accepts JSON with a non-empty `prompt`:
+
+```json
+{
+  "prompt": "Explain how rainbows form."
+}
+```
+
+A successful response has this shape:
+
+```json
+{
+  "answer": "..."
+}
+```
+
+The server returns an error response if the prompt is missing or Gemini cannot generate a response. Connection and DNS failures are reported as `503 Service Unavailable`.
+
+## Production build
+
+Build the frontend with:
+
+```bash
+cd palm-client
+npm run build
+```
+
+The generated static files are placed in `palm-client/dist`. The API server is started separately with `npm start` from `palm-server`. Configure your production web server to serve the frontend and route `/api` requests to the Express server; the Vite proxy is for local development only.
+
+## Troubleshooting
+
+- **Gemini connection or DNS error:** Confirm the server has internet access and can resolve `generativelanguage.googleapis.com`. Check VPN, firewall, and proxy settings.
+- **Missing or invalid API key:** Confirm `GEMINI_API_KEY` is set in `palm-server/.env`, then restart the server.
+- **Frontend cannot reach the API:** Make sure both development servers are running and that the API server is listening on the configured port.
+
+## Scripts
+
+| Directory | Command | Purpose |
+| --- | --- | --- |
+| `palm-client` | `npm run dev` | Start Vite development server |
+| `palm-client` | `npm run build` | Build frontend assets |
+| `palm-client` | `npm run lint` | Run ESLint |
+| `palm-client` | `npm run preview` | Preview built frontend |
+| `palm-server` | `npm run dev` | Start API server with nodemon |
+| `palm-server` | `npm start` | Start API server |

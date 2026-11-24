@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root { font-family: 'DM Sans', sans-serif; color: #252a26; background: #f7f8f5; font-synthesis: none; text-rendering: optimizeLegibility; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, textarea { font: inherit; }
+.app-shell { min-height: 100vh; display: flex; flex-direction: column; background: radial-gradient(ellipse at 50% 0%, #edf4e9 0, #f7f8f5 50%); }
+.topbar { height: 72px; padding: 0 clamp(22px, 6vw, 88px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e8ebe5; }
+.brand { color: #27332a; text-decoration: none; font: 800 18px 'Manrope', sans-serif; letter-spacing: -.6px; display: flex; align-items: center; gap: 9px; }
+.brand-mark { width: 29px; height: 29px; display: grid; place-items: center; border-radius: 9px; background: #2b6549; color: white; font-size: 18px; }
+.status { color: #738078; font-size: 12px; display: flex; align-items: center; gap: 8px; }
+.status i { height: 7px; width: 7px; border-radius: 50%; background: #67a87c; }
+.workspace { width: min(760px, calc(100% - 40px)); margin: 0 auto; flex: 1; display: flex; flex-direction: column; padding: clamp(55px, 10vh, 100px) 0 28px; }
+.intro { text-align: center; margin-bottom: 35px; }
+.eyebrow { color: #568167; text-transform: uppercase; font-weight: 700; letter-spacing: 1.7px; font-size: 10px; margin: 0 0 13px; }
+h1 { font: 700 clamp(30px, 5vw, 43px) 'Manrope', sans-serif; letter-spacing: -1.8px; margin: 0; color: #25332a; }
+.subheading { margin: 13px auto 0; max-width: 500px; color: #79827b; line-height: 1.65; font-size: 14px; }
+.answer-card { flex: 1; min-height: 190px; max-height: 43vh; overflow: auto; border: 1px solid #e5e9e2; border-radius: 18px; background: rgba(255,255,255,.72); box-shadow: 0 8px 30px #364a3710; padding: 24px 28px; }
+.empty-state { min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #a0a8a0; font-size: 13px; gap: 10px; }
+.empty-state p { margin: 0; }.sparkle { color: #86a88d; font-size: 23px; }
+.answer { line-height: 1.75; color: #39443b; font-size: 15px; }.answer h1,.answer h2,.answer h3 { text-align: left; letter-spacing: -.5px; margin: 1.2em 0 .5em; }.answer p { margin: .65em 0; }.answer pre { padding: 16px; overflow-x: auto; border-radius: 10px; background: #f1f4ef; }.answer code { font-size: .9em; }
+.loading-state { min-height: 140px; display: flex; align-items: center; justify-content: center; gap: 12px; color: #66736a; font-size: 14px; }.spinner { width: 17px; height: 17px; border: 2px solid #d9e4da; border-top-color: #43805c; border-radius: 50%; animation: spin .8s linear infinite; }@keyframes spin { to { transform: rotate(360deg); } }
+.error-state { padding: 18px; border-radius: 12px; background: #fff4f1; color: #883c30; }.error-state p { margin-bottom: 0; font-size: 14px; }
+.composer-wrap { margin-top: 20px; }.composer { background: white; border: 1px solid #dfe5dc; border-radius: 17px; padding: 16px 17px 12px; box-shadow: 0 10px 32px #33463812; transition: border-color .2s, box-shadow .2s; }.composer:focus-within { border-color: #83a88d; box-shadow: 0 0 0 4px #77a8871a, 0 10px 32px #33463812; }
+.composer textarea { display: block; width: 100%; min-height: 74px; resize: vertical; border: 0; outline: 0; color: #2a342c; background: transparent; line-height: 1.6; font-size: 15px; }.composer textarea::placeholder { color: #a2aaa3; }
+.composer-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; border-top: 1px solid #f0f2ee; color: #9aa29b; font-size: 11px; }.composer-footer button { border: 0; border-radius: 10px; background: #2f684a; color: white; padding: 10px 16px; font-weight: 600; cursor: pointer; transition: background .2s, transform .2s; }.composer-footer button:hover:not(:disabled) { background: #24563b; transform: translateY(-1px); }.composer-footer button:disabled { opacity: .48; cursor: default; }.composer-footer button span { padding-left: 5px; }
+.hint { margin: 12px 4px 0; text-align: center; color: #a1a9a2; font-size: 11px; }.hint kbd { font: inherit; color: #78827a; }.hint span { margin: 0 5px; }
+@media (max-width: 560px) { .topbar { height: 62px; padding: 0 20px; }.status { font-size: 0; }.workspace { padding-top: 54px; }.intro { margin-bottom: 25px; }.subheading { font-size: 13px; }.answer-card { padding: 19px; max-height: 40vh; }.composer { padding: 13px; }.composer-footer { font-size: 10px; } }
